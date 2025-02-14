@@ -1,19 +1,24 @@
 import React from "react";
-import Color, {ColorType} from "./Color";
+import Color from "./Color";
+import {ColorInfo} from "./ColorInfo.tsx";
 
 export interface ColorListProps {
-    colors: ColorType[];
+    colors: ColorInfo[];
+    onRemoveColor: (id: string) => void;
+    onRateColor: (id: string, rating: number) => void;
 }
 
 const ColorList = (colorProps: ColorListProps) => {
-    const colors = colorProps.colors;
-
+    const {colors, onRemoveColor, onRateColor} = colorProps;
     if (!colors.length) return <div>No Colors Listed. (Add a Color)</div>;
-    console.log("here in color list");
+
     return (
         <div>
             {colors.map((color) => (
-                <Color key={color.id} {...color} />
+                <Color key={color.id}
+                       color={color}
+                       onRateColor={onRateColor}
+                       onRemoveColor={onRemoveColor}/>
             ))}
         </div>
     );
